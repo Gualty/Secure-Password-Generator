@@ -2,7 +2,17 @@
  Generatore sicuro di password in Python
 
 ## Descrizione
-Questo script Python genera password sicure di lunghezza variabile. Le password sono composte da caratteri alfanumerici e simboli speciali.
+Questo script Python genera password sicure di lunghezza variabile e può essere integrato in altri progetti come modulo. 
+
+## Requisiti della password
+Le password generate rispettano i seguenti requisiti:
+- Almeno 8 caratteri
+- Lunghezza massima scelta dall'utente
+- Almeno una lettera maiuscola
+- Almeno una lettera minuscola
+- Almeno un numero
+- Almeno un carattere speciale
+- Non deve contenere più di tre caratteri uguali consecutivi
 
 ## Utilizzo
 Per utilizzare lo script, eseguire il comando:
