@@ -12,3 +12,5 @@ Per utilizzare lo script, eseguire il comando:
 Esempio di generazione di una password di lunghezza 12:
 ```python3 passwd_gen.py 12```
 
+## Responsabilità
+L'autore dello script non è responsabile dell'utilizzo improprio dello stesso o della sicurezza delle password generate. 
