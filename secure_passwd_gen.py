@@ -8,6 +8,7 @@
 # - Almeno un carattere speciale
 # - Non deve contenere più di tre caratteri uguali consecutivi
 # Versione 1.0
+# Sviluppato da Gualtiero @Gualty https://github.com/Gualty
 
 import random
 import string
