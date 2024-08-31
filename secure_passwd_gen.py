@@ -15,44 +15,55 @@ import string
 import sys
 
 # Costanti
-LUN_MIN_PASSWD = 8 # Lunghezza minima della password
-LUN_MAX_PASSWD = 1000 # Lunghezza massima della password
+LUN_MIN_PASSWD = 8  # Lunghezza minima della password
+LUN_MAX_PASSWD = 1000  # Lunghezza massima della password
 
-def genera_password(lung_passwd):
+
+def genera_password(lung_passwd, special=True, numbers=True, uppercase=True):
     """
     Genera una password sicura rispettando i criteri di sicurezza specificati.
 
     Args:
         lung_passwd (int): La lunghezza della password da generare.
+        special (bool): Se True, include caratteri speciali nella password.
+        numbers (bool): Se True, include numeri nella password.
+        uppercase (bool): Se True, include lettere maiuscole nella password.
 
     Returns:
         str: La password generata che soddisfa i criteri di sicurezza.
     """
     caratteri_speciali = "!@#%&/()=?"
+    caratteri = string.ascii_lowercase
+
+    if uppercase:
+        caratteri += string.ascii_uppercase
+    if numbers:
+        caratteri += string.digits
+    if special:
+        caratteri += caratteri_speciali
+
+    if len(caratteri) == 0:
+        raise ValueError("Devi scegliere almeno un tipo di carattere per generare la password.")
 
     while True:
-        # Assicurati che la password contenga almeno un carattere di ciascun tipo richiesto
-        password = [
-            random.choice(string.ascii_uppercase),
-            random.choice(string.ascii_lowercase),
-            random.choice(string.digits),
-            random.choice(caratteri_speciali)
-        ]
+        password = random.choices(caratteri, k=lung_passwd)
 
-        # Riempie il resto della password con caratteri casuali
-        password += random.choices(string.ascii_letters + string.digits + caratteri_speciali, k=lung_passwd - 4)
+        # Garantisce la presenza di almeno un carattere di ciascun tipo se richiesto
+        if uppercase:
+            password.append(random.choice(string.ascii_uppercase))
+        if numbers:
+            password.append(random.choice(string.digits))
+        if special:
+            password.append(random.choice(caratteri_speciali))
 
-        # Mescola la lista per evitare che i primi quattro caratteri siano sempre in un ordine fisso
-        random.shuffle(password)
-
-        # Converti la lista in stringa
-        password = ''.join(password)
-
-        # Verifica se la password soddisfa i criteri (niente caratteri uguali consecutivi)
+        # Assicurati che la password non abbia più di tre caratteri uguali consecutivi
         if not contiene_caratteri_uguali_consecutivi(password):
+            random.shuffle(password)
+            password = ''.join(password[:lung_passwd])
             break
 
     return password
+
 
 def contiene_caratteri_uguali_consecutivi(password):
     """
@@ -69,6 +80,7 @@ def contiene_caratteri_uguali_consecutivi(password):
             return True
     return False
 
+
 def main():
     """
     Funzione principale che gestisce l'input dell'utente e genera la password.
@@ -78,10 +90,16 @@ def main():
             lung_passwd = int(sys.argv[1])
             if lung_passwd < LUN_MIN_PASSWD or lung_passwd > LUN_MAX_PASSWD:
                 raise ValueError
-            password = genera_password(lung_passwd)
+
+            special = '--no-special' not in sys.argv
+            numbers = '--no-numbers' not in sys.argv
+            uppercase = '--no-uppercase' not in sys.argv
+
+            password = genera_password(lung_passwd, special, numbers, uppercase)
             print(f"\033[1m{password}\033[0m")
         except ValueError:
-            print(f"La password deve essere di almeno {LUN_MIN_PASSWD} caratteri e massimo {LUN_MAX_PASSWD}. Inserisci solo valori numerici validi.")
+            print(
+                f"La password deve essere di almeno {LUN_MIN_PASSWD} caratteri e massimo {LUN_MAX_PASSWD}. Inserisci solo valori numerici validi.")
     else:
         print("Generatore di Password Sicure")
         while True:
@@ -89,12 +107,20 @@ def main():
                 lung_passwd = int(input("Inserisci la lunghezza della password: "))
                 if lung_passwd < LUN_MIN_PASSWD or lung_passwd > LUN_MAX_PASSWD:
                     raise ValueError
+
+                special = input("Vuoi usare caratteri speciali? (sì/no, predefinito: sì): ").strip().lower() != 'no'
+                numbers = input("Vuoi usare numeri? (sì/no, predefinito: sì): ").strip().lower() != 'no'
+                uppercase = input("Vuoi usare lettere maiuscole? (sì/no, predefinito: sì): ").strip().lower() != 'no'
+
                 break
             except ValueError:
-                print(f"La password deve essere di almeno {LUN_MIN_PASSWD} caratteri e massimo {LUN_MAX_PASSWD}. Inserisci solo valori numerici validi.")
+                print(
+                    f"La password deve essere di almeno {LUN_MIN_PASSWD} caratteri e massimo {LUN_MAX_PASSWD}. Inserisci solo valori numerici validi.")
 
-        password = genera_password(lung_passwd)
+        password = genera_password(lung_passwd, special, numbers, uppercase)
         print(f"La password generata è: \033[1m{password}\033[0m")
 
+
+# Questo blocco permette di eseguire il codice come script standalone
 if __name__ == "__main__":
     main()
