@@ -16,11 +16,13 @@ Le password generate rispettano i seguenti requisiti:
 
 ## Utilizzo
 Per utilizzare lo script, eseguire il comando:
-```python3 secure_passwd_gen.py <lunghezza_password>```
+```python3 secure_passwd_gen.py <lunghezza_password> [--no-special --no-numbers --no-uppercase]```
 
-## Esempio
+## Esempio con massima sicurezza
 Esempio di generazione di una password di lunghezza 12:
 ```python3 secure_passwd_gen.py 12```
+### Opzioni
+```python3 password_generator.py 12 --no-special --no-numbers --no-uppercase```
 
 ## Importa come modulo
 Il modulo `secure_passwd_gen` può essere importato in altri script Python. 
@@ -28,10 +30,10 @@ Il modulo `secure_passwd_gen` può essere importato in altri script Python.
 Per farlo, è sufficiente importare il modulo e chiamare la funzione `generate_password` specificando la lunghezza della password desiderata.
 
 ```
-import secure_passwd_gen.py as spg
+import secure_passwd_gen as spg
 
-lunghezza = 12  # O qualsiasi altro valore desiderato superiore a 8 e inferiore a 1000
-password = spg.genera_password(lunghezza)
+lunghezza = 12 # O qualsiasi altro valore desiderato superiore a 8 e inferiore a 1000
+password = spg.genera_password(lunghezza, special=True, uppercase=False)
 print(f"La password generata è: \033[1m{password}\033[0m")
 ```
 
