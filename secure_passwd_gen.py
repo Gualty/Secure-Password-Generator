@@ -80,12 +80,40 @@ def contiene_caratteri_uguali_consecutivi(password):
             return True
     return False
 
+def mostra_aiuto():
+    """
+    Mostra il messaggio di aiuto con la descrizione delle opzioni disponibili.
+    """
+    help_message = """
+    Utilizzo: python3 secure_passwd_gen.py [LUNGHEZZA] [OPZIONI]
+
+    Genera una password sicura con le seguenti opzioni:
+
+    LUNGHEZZA
+        Specifica la lunghezza della password da generare (minimo 8 caratteri).
+
+    OPZIONI:
+        --no-special    Esclude i caratteri speciali dalla password.
+        --no-numbers    Esclude i numeri dalla password.
+        --no-uppercase  Esclude le lettere maiuscole dalla password.
+        -h, --help      Mostra questo messaggio di aiuto.
+
+    Esempio:
+        python python3 secure_passwd_gen.py 12 --no-special --no-numbers
+        Questo comando genera una password di 12 caratteri contenente solo lettere minuscole e maiuscole.
+    """
+    print(help_message)
+
 
 def main():
     """
     Funzione principale che gestisce l'input dell'utente e genera la password.
     """
     if len(sys.argv) > 1:
+        if '-h' in sys.argv or '--help' in sys.argv:
+            mostra_aiuto()
+            return
+
         try:
             lung_passwd = int(sys.argv[1])
             if lung_passwd < LUN_MIN_PASSWD or lung_passwd > LUN_MAX_PASSWD:
