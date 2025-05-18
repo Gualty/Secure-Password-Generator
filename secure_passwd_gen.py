@@ -141,8 +141,7 @@ def main():
 
                 break
             except ValueError:
-                print(
-                    f"La password deve essere di almeno {LUN_MIN_PASSWD} caratteri e massimo {LUN_MAX_PASSWD}. Inserisci solo valori numerici validi.")
+                print(f"La password deve essere di almeno {LUN_MIN_PASSWD} caratteri e massimo {LUN_MAX_PASSWD}. Inserisci solo valori numerici validi.")
 
         password = genera_password(lung_passwd, special, numbers, uppercase)
         print(f"La password generata è: \033[1m{password}\033[0m")
