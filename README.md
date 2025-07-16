@@ -33,7 +33,7 @@ Per farlo, è sufficiente importare il modulo e chiamare la funzione `generate_p
 import secure_passwd_gen as spg
 
 lunghezza = 12 # O qualsiasi altro valore desiderato superiore a 8 e inferiore a 1000
-password = spg.genera_password(lunghezza, special=True, uppercase=False)
+password = spg.generate_password(lunghezza, special=True, uppercase=False)
 print(f"La password generata è: \033[1m{password}\033[0m")
 ```
 
